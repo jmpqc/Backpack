@@ -1,0 +1,40 @@
+﻿sword_dragonslayer = {
+	id = 0, 
+	name = '屠龙宝刀', 
+	description = '有法力的刀', 
+	buyPrice = 25, 
+	sellPrice = 12, 
+	icon = 'dragonslayer',
+	attack = 200
+}
+sword_machete = {
+	id = 1, 
+	name = '大砍刀', 
+	description = '有力量的刀', 
+	buyPrice = 20, 
+	sellPrice = 10, 
+	icon = 'machete',
+	attack = 100
+}
+
+HP_back = {
+	id = 2,
+	name = '健康法术',
+	description = '恢复气血',
+	buyPrice = 20,
+	sellPrice = 10,
+	icon = 'spellsticker2',
+	backHP = 20,
+	backMP = 0
+}
+
+MP_back = {
+	id = 3,
+	name = '力量法术',
+	description = '恢复法力',
+	buyPrice = 20,
+	sellPrice = 10,
+	icon = 'spellsticker1',
+	backHP = 0,
+	backMP = 20
+}

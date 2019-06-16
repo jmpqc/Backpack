@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backpack", "Backpack.csproj", "{C57B6C03-2997-B0A9-9076-94C51C5D02EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backpack.Editor", "Backpack.Editor.csproj", "{689A16B5-7481-F082-DE5D-336D15F59085}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C57B6C03-2997-B0A9-9076-94C51C5D02EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C57B6C03-2997-B0A9-9076-94C51C5D02EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C57B6C03-2997-B0A9-9076-94C51C5D02EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C57B6C03-2997-B0A9-9076-94C51C5D02EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{689A16B5-7481-F082-DE5D-336D15F59085}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{689A16B5-7481-F082-DE5D-336D15F59085}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{689A16B5-7481-F082-DE5D-336D15F59085}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{689A16B5-7481-F082-DE5D-336D15F59085}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
