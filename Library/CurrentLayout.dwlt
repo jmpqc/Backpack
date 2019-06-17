@@ -111,7 +111,7 @@ MonoBehaviour:
   m_MinSize: {x: 917, y: 442}
   m_MaxSize: {x: 22012, y: 10021}
   vertical: 0
-  controlID: 90
+  controlID: 135
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -474,9 +474,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
+    m_SelectedIDs: 64080000
     m_LastClickedID: 0
-    m_ExpandedIDs: 94fbffff00000000782a0000
+    m_ExpandedIDs: 94fbffff00000000dc290000782a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -565,18 +565,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Resources/Prefabs
+    - Assets/Scripts/Manegers
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/Prefabs
+  - Assets/Scripts/Manegers
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\dream\Desktop\UnityProjects\Backpack
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: a2280000
-    m_LastClickedID: 10402
+    m_SelectedIDs: 60290000
+    m_LastClickedID: 10592
     m_ExpandedIDs: 0000000030280000ca2800002c29000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -632,7 +632,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 322800003a280000a22800009a270000cc27000042a7fdffe4270000882900008a29000092290000c428000090290000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
