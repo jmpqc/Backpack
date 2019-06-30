@@ -33,9 +33,10 @@ public static class ObjectsPool
     /// <param name="path">预置体路径</param>
     /// <param name="prefabName">预置体名称</param>
     /// <returns></returns>
-    public static object GetFromPool(string path, string prefabName)
+    public static object GetFromPool(string prefabName)
     {
-        foreach(object o in pool[prefabName + "(Clone)"])//遍历某种物体的对象池
+        if (!pool.ContainsKey(prefabName + "(Clone)")) return null; //如果对象池中并不包含该种对象，返回null
+        foreach (object o in pool[prefabName + "(Clone)"])//遍历某种物体的对象池
         {
             if((o as GameObject).activeSelf == false)//如果有，没被使用的
             {
@@ -46,8 +47,10 @@ public static class ObjectsPool
         if(canGrow)//如果允许增加物体
         {
             //增加一个新物体
-            GameObject obj = MonoBehaviour.Instantiate(Resources.Load(path + prefabName)) as GameObject;
-            pool[obj.name].Add(obj);//添加到字典中
+            GameObject tempObj = pool[prefabName + "(Clone)"][0] as GameObject; //因为对象池中有这类对象，得到列表中的第一个对象
+            GameObject obj = MonoBehaviour.Instantiate(tempObj) as GameObject; //通过列表中第一个对象，克隆一个新对象
+            obj.name = obj.name.Substring(0,obj.name.Length - 7); //因为原物的名字里已经有一个“(Clone)”了，新克隆的物体名字里还会再增加一个“(Clone)”，也就是现在有两个(Clone)，所以要删掉一个
+            pool[obj.name].Add(obj);//添加到字典（对象池）中
             return obj;
         }
         return null;

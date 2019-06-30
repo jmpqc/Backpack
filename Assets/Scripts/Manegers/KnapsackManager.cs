@@ -124,7 +124,7 @@ public class KnapsackManager : MonoBehaviour //背包分为前端和后端，后
             }
         }
         //如果上面没有找到一样的，就要放到一个空格子里
-        item = ObjectsPool.GetFromPool("Prefabs/", "UItem") as GameObject;//从对象池取一个（前景）物体
+        item = ObjectsPool.GetFromPool("UItem") as GameObject;//从对象池取一个（前景）物体
         if (item == null) return;//当对象池不允许新增物体时，就可能取不到物体
         item.GetComponent<Image>().sprite = spriteItems[baseItem.Icon];//为物体设置一张图片
 
@@ -200,22 +200,22 @@ public class KnapsackManager : MonoBehaviour //背包分为前端和后端，后
     /// <param name="newParent">Utem被拖入的UCell</param>
     public void Drag2Empty(GameObject oldParent, GameObject newParent)
     {
-        foreach (var cell in UFullCells)
+        foreach (var cell in UFullCells) //遍历非空格子列表
         {
-            if (cell.Value.name == oldParent.name)
+            if (cell.Value.name == oldParent.name) //找到物品被拖动之前的格子
             {
-                UFullCells.Remove(cell.Key);
-                UEmptyCells.Add(cell.Key, cell.Value);
+                UFullCells.Remove(cell.Key); //从非空格子列表中删除该格子
+                UEmptyCells.Add(cell.Key, cell.Value); //加入到空格子列表中
                 break;
             }
         }
 
-        foreach (var cell in UEmptyCells)
+        foreach (var cell in UEmptyCells) //遍历空格子列表
         {
-            if (cell.Value.name == newParent.name)
+            if (cell.Value.name == newParent.name) //找到物品被拖动之后的新位置，的格子
             {
-                UEmptyCells.Remove(cell.Key);
-                UFullCells.Add(cell.Key, cell.Value);
+                UEmptyCells.Remove(cell.Key); //从空格子列表中删除这个格子
+                UFullCells.Add(cell.Key, cell.Value); //加入非空格子列表中
                 break;
             }
         }

@@ -92,8 +92,12 @@ public class DragMove : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 {
                     if (eventData.pointerCurrentRaycast.gameObject.transform.childCount == 0)
                     {
-                        transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform);
-                        KnapsackManager.Instance.Drag2Empty(oldParent, eventData.pointerCurrentRaycast.gameObject);
+                        transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform);                        
+                        
+                        //当一个有物品的格子，将物品拖到另一个空的格子里的时候，
+                        //原来是非空的格子，变空了，要放到空格子列表中，
+                        //原来是空的格子，变非空了，要放到非空格子列表中。
+                        KnapsackManager.Instance.Drag2Empty(oldParent, eventData.pointerCurrentRaycast.gameObject); 
                     }
                 }
                 //有东西的格子，交换
