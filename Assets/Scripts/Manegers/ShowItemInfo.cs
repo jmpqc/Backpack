@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ShowItemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    GameObject showInfo; //显示信息物体的实例
+    GameObject showInfo; //显示物体信息的实例
     /// <summary>
     /// 鼠标悬浮与物体之上
     /// </summary>

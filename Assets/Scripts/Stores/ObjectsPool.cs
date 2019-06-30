@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 通过用对象池
+/// 通用对象池
 /// </summary>
 public static class ObjectsPool
 {
@@ -11,8 +11,9 @@ public static class ObjectsPool
     private static Dictionary<string, ArrayList> pool = new Dictionary<string, ArrayList>();//池体
 
     /// <summary>
-    /// 初始化对象池，根据给定物体(预置体必须在Resources目录下)的名称，数量在对象池中实例化对应的物体并放置到指定的父物体下
+    /// 初始化对象池，根据给定物体(预置体必须在Resources目录下)的名称、数量，在对象池中实例化对应的物体并放置到指定的父物体下
     /// </summary>
+    /// <param name="path">预置体路径</param>    
     public static void InitPool(string path, string prefabName, int num, GameObject parent)
     {
         if (pool.ContainsKey(prefabName + "(Clone)")) return;//如果池中已经这种物体，就不能再进行初始化
