@@ -93,6 +93,7 @@ public class DragMove : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                     if (eventData.pointerCurrentRaycast.gameObject.transform.childCount == 0)
                     {
                         transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform);
+                        KnapsackManager.Instance.Drag2Empty(oldParent, eventData.pointerCurrentRaycast.gameObject);
                     }
                 }
                 //有东西的格子，交换

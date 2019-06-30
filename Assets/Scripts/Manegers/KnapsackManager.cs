@@ -7,6 +7,15 @@ using XLua;
 
 public class KnapsackManager : MonoBehaviour //背包分为前端和后端，后端包含背包的各种属性，包括（用于在前端显示的）图片资源的路径及名称。前端用于在视图中显示，控制实际用来显示的游戏物体
 {
+    private static KnapsackManager instance; //单例字段
+    public static KnapsackManager Instance //单例属性
+    {
+        get { return instance; }
+        set { }
+    }
+
+
+
     LuaEnv luaenv;//创建Lua环境
     //背包的前端也分为前景和背景。背景是不会有变化的，包括背景图，Panel窗口，和每个小格子的背景。前景是一个或多个Image的UI物体，在需要的时候它的Sprite会引用一个图片资源，并成为某个小格子背景的子物体，成为小格子的前景
     GameObject item; //【前端】来用接收实例化背包(前景)物体的引用（是一有Image物体，会有一个<Imgae>组件，sprite指向一个图片，然后成为某个小格子的前景），
@@ -18,6 +27,11 @@ public class KnapsackManager : MonoBehaviour //背包分为前端和后端，后
     //在拾取一个物体的时候，（背景）空格子（Empty）有可能会少一个，（背景）非空（Full）格子有可能会多一个，所以使用两个列表分别记录空格子和非空格子，以便遍历
     SortedDictionary<int, GameObject> UEmptyCells;//自动排序
     SortedDictionary<int, GameObject> UFullCells;//自动排序
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void OnEnable()
     {
@@ -174,5 +188,37 @@ public class KnapsackManager : MonoBehaviour //背包分为前端和后端，后
     private void OnDisable()
     {
         luaenv.Dispose();//消毁Lua环境变量
+    }
+
+    /// <summary>
+    /// 将一个UItem从一个UCell中拖到一个空的UCell时调用该方法
+    /// 空格子列表与非空格子列表进行交换
+    /// 有东西的格子变成没东西的
+    /// 没有东西的格子变成有东西的
+    /// </summary>
+    /// <param name="oldParent">Utem被拖出的UCell</param>
+    /// <param name="newParent">Utem被拖入的UCell</param>
+    public void Drag2Empty(GameObject oldParent, GameObject newParent)
+    {
+        foreach (var cell in UFullCells)
+        {
+            if (cell.Value.name == oldParent.name)
+            {
+                UFullCells.Remove(cell.Key);
+                UEmptyCells.Add(cell.Key, cell.Value);
+                break;
+            }
+        }
+
+        foreach (var cell in UEmptyCells)
+        {
+            if (cell.Value.name == newParent.name)
+            {
+                UEmptyCells.Remove(cell.Key);
+                UFullCells.Add(cell.Key, cell.Value);
+                break;
+            }
+        }
+
     }
 }
