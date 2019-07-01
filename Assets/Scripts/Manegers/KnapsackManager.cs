@@ -7,17 +7,31 @@ using XLua;
 
 public class KnapsackManager : MonoBehaviour //背包分为前端和后端，后端包含背包的各种属性，包括（用于在前端显示的）图片资源的路径及名称。前端用于在视图中显示，控制实际用来显示的游戏物体
 {
+    private static KnapsackManager instance; //单例字段
+    public static KnapsackManager Instance //单例属性
+    {
+        get { return instance; }
+        set { }
+    }
+
+
+
     LuaEnv luaenv;//创建Lua环境
     //背包的前端也分为前景和背景。背景是不会有变化的，包括背景图，Panel窗口，和每个小格子的背景。前景是一个或多个Image的UI物体，在需要的时候它的Sprite会引用一个图片资源，并成为某个小格子背景的子物体，成为小格子的前景
-    GameObject item; //【前端】来用接收实例化背包(前景)物体的引用（是一有Image物体，会有一个<Imgae>组件，sprite指向一个图片，然后成为某个小格子的前景），
+    GameObject item; //【前端】用来接收实例化背包(前景)物体的引用（是一个Image物体，包含一个<Imgae>组件，sprite指向一个图片，然后成为某个小格子的前景），
     Dictionary<string, Sprite> spriteItems = new Dictionary<string, Sprite>();//【前端】存放背包物体大图里所有被分割的小图，因为小图并没有单独形成文件
-    public static Dictionary<int, BaseItem> ItemList = new Dictionary<int, BaseItem>();//【前端】背包里的物体，显示在游戏窗口里的只是这个物体对应的图片，是物体的一个属性
+    public static Dictionary<int, BaseItem> ItemList = new Dictionary<int, BaseItem>();//【后端】包含全部属性的各种物体列表
 
     Dictionary<string, object> dictLuaTable = new Dictionary<string, object>(); //【后端】映射LuaTable，获取Lua表里存放的背包物品及属性
 
     //在拾取一个物体的时候，（背景）空格子（Empty）有可能会少一个，（背景）非空（Full）格子有可能会多一个，所以使用两个列表分别记录空格子和非空格子，以便遍历
     SortedDictionary<int, GameObject> UEmptyCells;//自动排序
     SortedDictionary<int, GameObject> UFullCells;//自动排序
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void OnEnable()
     {
@@ -110,9 +124,9 @@ public class KnapsackManager : MonoBehaviour //背包分为前端和后端，后
             }
         }
         //如果上面没有找到一样的，就要放到一个空格子里
-        item = ObjectsPool.GetFromPool("Prefabs/", "UItem") as GameObject;//从对象池取一个（前景）物体
+        item = ObjectsPool.GetFromPool("UItem") as GameObject;//从对象池取一个（前景）物体
         if (item == null) return;//当对象池不允许新增物体时，就可能取不到物体
-        item.GetComponent<Image>().sprite = spriteItems[baseItem.Icon];//为物体设置一张图片
+        item.GetComponent<Image>().sprite = GetIcon(baseItem.Icon);//随机数对应的物品的图片，赋给小格子的前景物体
 
         item.transform.SetParent(UEmptyCells.ElementAt(0).Value.transform);//为物体设置新的位置，放到一个空格子里
         item.transform.localPosition = Vector3.zero;
@@ -174,5 +188,37 @@ public class KnapsackManager : MonoBehaviour //背包分为前端和后端，后
     private void OnDisable()
     {
         luaenv.Dispose();//消毁Lua环境变量
+    }
+
+    /// <summary>
+    /// 将一个UItem从一个UCell中拖到一个空的UCell时调用该方法
+    /// 空格子列表与非空格子列表进行交换
+    /// 有东西的格子变成没东西的
+    /// 没有东西的格子变成有东西的
+    /// </summary>
+    /// <param name="oldParent">Utem被拖出的UCell</param>
+    /// <param name="newParent">Utem被拖入的UCell</param>
+    public void Drag2Empty(GameObject oldParent, GameObject newParent)
+    {
+        foreach (var cell in UFullCells) //遍历非空格子列表
+        {
+            if (cell.Value.name == oldParent.name) //找到物品被拖动之前的格子
+            {
+                UFullCells.Remove(cell.Key); //从非空格子列表中删除该格子
+                UEmptyCells.Add(cell.Key, cell.Value); //加入到空格子列表中
+                break;
+            }
+        }
+
+        foreach (var cell in UEmptyCells) //遍历空格子列表
+        {
+            if (cell.Value.name == newParent.name) //找到物品被拖动之后的新位置，的格子
+            {
+                UEmptyCells.Remove(cell.Key); //从空格子列表中删除这个格子
+                UFullCells.Add(cell.Key, cell.Value); //加入非空格子列表中
+                break;
+            }
+        }
+
     }
 }
