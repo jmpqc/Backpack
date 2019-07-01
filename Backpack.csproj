@@ -235,15 +235,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\BaseItems\Armors.cs" />
-    <Compile Include="Assets\Scripts\BaseItems\BaseItem.cs" />
-    <Compile Include="Assets\Scripts\BaseItems\Consumable.cs" />
-    <Compile Include="Assets\Scripts\BaseItems\Weapons.cs" />
-    <Compile Include="Assets\Scripts\Manegers\ConsumptionManager.cs" />
-    <Compile Include="Assets\Scripts\Manegers\DragMove.cs" />
-    <Compile Include="Assets\Scripts\Manegers\KnapsackManager.cs" />
-    <Compile Include="Assets\Scripts\Manegers\ShowItemInfo.cs" />
-    <Compile Include="Assets\Scripts\Stores\ObjectsPool.cs" />
+    <Compile Include="Assets\Knapsac\Scripts\BaseItems\Armors.cs" />
+    <Compile Include="Assets\Knapsac\Scripts\BaseItems\BaseItem.cs" />
+    <Compile Include="Assets\Knapsac\Scripts\BaseItems\Consumable.cs" />
+    <Compile Include="Assets\Knapsac\Scripts\BaseItems\Weapons.cs" />
+    <Compile Include="Assets\Knapsac\Scripts\Manegers\ConsumptionManager.cs" />
+    <Compile Include="Assets\Knapsac\Scripts\Manegers\DragMove.cs" />
+    <Compile Include="Assets\Knapsac\Scripts\Manegers\KnapsackManager.cs" />
+    <Compile Include="Assets\Knapsac\Scripts\Manegers\ShowItemInfo.cs" />
+    <Compile Include="Assets\Knapsac\Scripts\Stores\ObjectsPool.cs" />
     <Compile Include="Assets\XLua\Src\CodeEmit.cs" />
     <Compile Include="Assets\XLua\Src\CopyByValue.cs" />
     <Compile Include="Assets\XLua\Src\DelegateBridge.cs" />
@@ -274,7 +274,7 @@
     <Compile Include="Assets\XLua\Tutorial\LuaCallCSharp\LuaCallCs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Resources\LuaCode\ItemAttribute.lua.txt" />
+    <None Include="Assets\Knapsac\Resources\LuaCode\ItemAttribute.lua.txt" />
     <None Include="Assets\XLua\CHANGELOG.txt" />
     <None Include="Assets\XLua\Resources\perf\memory.lua.txt" />
     <None Include="Assets\XLua\Resources\perf\profiler.lua.txt" />
