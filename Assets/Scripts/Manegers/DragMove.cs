@@ -7,11 +7,14 @@ using UnityEngine.UI;
 public class DragMove : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, ICanvasRaycastFilter
 {
     GameObject outermostWindow; //背包最底层的图片，也是最外侧的边框
-    GameObject tempUI; //为了让小格子的前景UI在被拖动时始终在最前面，要把它暂时移动到这个临时UI下（作为临时UI的子物体）。因为临时UI物体在Canvas的最下面，所以在前面。
-    bool isCanReceiveRaycast = true; //当前脚本挂载的物体就是小格子的前景物体，当它被拖动的时候（在松开前）不能再接收射线
-    bool isMouseWithinUIScope = true;//鼠标位置是否在UI的范围内，刚开始拖动时，肯定是在的
+    GameObject tempUI; //为了让小格子的前景UI在被拖动时始终在最前面，要把它暂时移动到这个临时UI下（作为临时UI的子物体）。因为临时UI物体在Canvas的最下面，所以显示在前面。
+    bool isCanReceiveRaycast = true; //（标志）当前脚本挂载的物体就是小格子的前景物体，当它被拖动的时候（在松开前）不能再接收射线
+    bool isMouseWithinUIScope = true;//（标志）鼠标位置是否在UI的范围内，刚开始拖动时，肯定是在的
 
     GameObject oldParent; //小格子前景物体被拖动之前所在的位置
+
+    RectTransform selfRectTransform;  //当前物体（UItem）的RectTransform
+    RectTransform backgroundRectTransform;  //最底层（也是最外层）UI的RectTransform
     /// <summary>
     /// 当前物体是否接收射线检测
     /// </summary>
@@ -139,16 +142,16 @@ public class DragMove : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     bool EdgeDetection()
     {
         //移动的Item的四个边框的位置
-        float currentItemLeftEdge = GetComponent<RectTransform>().position.x - GetComponent<RectTransform>().sizeDelta.x / 2;
-        float currentItemRightEdge = GetComponent<RectTransform>().position.x + GetComponent<RectTransform>().sizeDelta.x / 2;
-        float currentItemTopEdge = GetComponent<RectTransform>().position.y + GetComponent<RectTransform>().sizeDelta.y / 2;
-        float currentItemBottomEdge = GetComponent<RectTransform>().position.y - GetComponent<RectTransform>().sizeDelta.y / 2;
+        float currentItemLeftEdge = selfRectTransform.position.x - selfRectTransform.sizeDelta.x / 2;
+        float currentItemRightEdge = selfRectTransform.position.x + selfRectTransform.sizeDelta.x / 2;
+        float currentItemTopEdge = selfRectTransform.position.y + selfRectTransform.sizeDelta.y / 2;
+        float currentItemBottomEdge = selfRectTransform.position.y - selfRectTransform.sizeDelta.y / 2;
 
         //背包最外层UI的四个边框的位置
-        float outermostWindowLeftEdge = outermostWindow.GetComponent<RectTransform>().position.x - outermostWindow.GetComponent<RectTransform>().sizeDelta.x / 2;
-        float outermostWindowRightEdge = outermostWindow.GetComponent<RectTransform>().position.x + outermostWindow.GetComponent<RectTransform>().sizeDelta.x / 2;
-        float outermostWindowTopEdge = outermostWindow.GetComponent<RectTransform>().position.y + outermostWindow.GetComponent<RectTransform>().sizeDelta.y / 2;
-        float outermostWindowBotteomEdge = outermostWindow.GetComponent<RectTransform>().position.y - outermostWindow.GetComponent<RectTransform>().sizeDelta.y / 2;
+        float outermostWindowLeftEdge = backgroundRectTransform.position.x - backgroundRectTransform.sizeDelta.x / 2;
+        float outermostWindowRightEdge = backgroundRectTransform.position.x + backgroundRectTransform.sizeDelta.x / 2;
+        float outermostWindowTopEdge = backgroundRectTransform.position.y + backgroundRectTransform.sizeDelta.y / 2;
+        float outermostWindowBotteomEdge = backgroundRectTransform.position.y - backgroundRectTransform.sizeDelta.y / 2;
 
         if (currentItemLeftEdge - outermostWindowLeftEdge > 5f && currentItemBottomEdge - outermostWindowBotteomEdge > 5f && outermostWindowRightEdge - currentItemRightEdge > 5f && outermostWindowTopEdge - currentItemTopEdge > 5f)
         {
@@ -165,6 +168,9 @@ public class DragMove : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     {
         tempUI = GameObject.Find("TempUI");
         outermostWindow = GameObject.Find("Knapsack");
+
+        selfRectTransform = GetComponent<RectTransform>();
+        backgroundRectTransform = outermostWindow.GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
